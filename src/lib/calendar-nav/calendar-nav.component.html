@@ -1,18 +1,4 @@
 <div class="dp-calendar-nav-container">
-  <div class="dp-nav-header">
-    <span [attr.data-hidden]="isLabelClickable"
-          [hidden]="isLabelClickable"
-          [innerText]="label">
-    </span>
-    <button (click)="labelClicked()"
-            [attr.data-hidden]="!isLabelClickable"
-            [hidden]="!isLabelClickable"
-            [innerText]="label"
-            class="dp-nav-header-btn"
-            type="button">
-    </button>
-  </div>
-
   <div class="dp-nav-btns-container">
     <div class="dp-calendar-nav-container-left">
       <button (click)="leftSecondaryNavClicked()"
@@ -26,6 +12,19 @@
               [disabled]="leftNavDisabled"
               [hidden]="!showLeftNav"
               class="dp-calendar-nav-left"
+              type="button">
+      </button>
+    </div>
+    <div class="dp-nav-header">
+      <span [attr.data-hidden]="isLabelClickable"
+            [hidden]="isLabelClickable"
+            [innerText]="label">
+      </span>
+      <button (click)="labelClicked()"
+              [attr.data-hidden]="!isLabelClickable"
+              [hidden]="!isLabelClickable"
+              [innerText]="label"
+              class="dp-nav-header-btn"
               type="button">
       </button>
     </div>
