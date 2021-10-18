@@ -16,8 +16,8 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import {TimeSelectService, TimeUnit} from './time-select.service';
-import * as moment from 'moment';
-import {Moment} from 'moment';
+import * as dayjs from 'dayjs';
+import {Dayjs} from 'dayjs';
 import {ITimeSelectConfig, ITimeSelectConfigInternal} from './time-select-config.model';
 import {
   ControlValueAccessor,
@@ -90,13 +90,13 @@ export class TimeSelectComponent implements OnInit, OnChanges, ControlValueAcces
               public cd: ChangeDetectorRef) {
   }
 
-  _selected: Moment;
+  _selected: Dayjs;
 
-  get selected(): Moment {
+  get selected(): Dayjs {
     return this._selected;
   }
 
-  set selected(selected: Moment) {
+  set selected(selected: Dayjs) {
     this._selected = selected;
     this.calculateTimeParts(this.selected);
 
@@ -121,7 +121,7 @@ export class TimeSelectComponent implements OnInit, OnChanges, ControlValueAcces
 
   init() {
     this.componentConfig = this.timeSelectService.getConfig(this.config);
-    this.selected = this.selected || moment();
+    this.selected = this.selected || dayjs();
     this.inputValueType = this.utilsService.getInputType(this.inputValue, false);
   }
 
@@ -142,13 +142,13 @@ export class TimeSelectComponent implements OnInit, OnChanges, ControlValueAcces
     this.inputValue = value;
 
     if (value) {
-      const momentValue = this.utilsService
-        .convertToMomentArray(value, {
+      const dayjsValue = this.utilsService
+        .convertToDayjsArray(value, {
           allowMultiSelect: false,
           format: this.timeSelectService.getTimeFormat(this.componentConfig)
         })[0];
-      if (momentValue.isValid()) {
-        this.selected = momentValue;
+      if (dayjsValue.isValid()) {
+        this.selected = dayjsValue;
         this.inputValueType = this.utilsService
           .getInputType(this.inputValue, false);
       }
@@ -175,8 +175,8 @@ export class TimeSelectComponent implements OnInit, OnChanges, ControlValueAcces
     }
   }
 
-  processOnChangeCallback(value: Moment): CalendarValue {
-    return this.utilsService.convertFromMomentArray(
+  processOnChangeCallback(value: Dayjs): CalendarValue {
+    return this.utilsService.convertFromDayjsArray(
       this.timeSelectService.getTimeFormat(this.componentConfig),
       [value],
       this.componentConfig.returnedValueType || this.inputValueType
@@ -215,7 +215,7 @@ export class TimeSelectComponent implements OnInit, OnChanges, ControlValueAcces
     this.cd.markForCheck();
   }
 
-  calculateTimeParts(time: Moment) {
+  calculateTimeParts(time: Dayjs) {
     this.hours = this.timeSelectService.getHours(this.componentConfig, time);
     this.minutes = this.timeSelectService.getMinutes(this.componentConfig, time);
     this.seconds = this.timeSelectService.getSeconds(this.componentConfig, time);

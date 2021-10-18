@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import * as moment from 'moment';
-import {Moment} from 'moment';
+import * as dayjs from 'dayjs';
+import {Dayjs} from 'dayjs';
 import {FormControl} from '@angular/forms';
 import {ECalendarValue, IDatePickerConfig} from '../../../lib';
 
@@ -133,12 +133,12 @@ export class ConfigFormComponent implements OnInit {
       value: null
     },
     {
-      name: ECalendarValue[ECalendarValue.Moment],
-      value: ECalendarValue.Moment
+      name: ECalendarValue[ECalendarValue.Dayjs],
+      value: ECalendarValue.Dayjs
     },
     {
-      name: ECalendarValue[ECalendarValue.MomentArr],
-      value: ECalendarValue.MomentArr
+      name: ECalendarValue[ECalendarValue.DayjsArr],
+      value: ECalendarValue.DayjsArr
     },
     {
       name: ECalendarValue[ECalendarValue.String],
@@ -155,20 +155,20 @@ export class ConfigFormComponent implements OnInit {
   @Input() pickerMode: string;
   @Input() config: IDatePickerConfig;
 
-  @Output() onDisplayDateChange = new EventEmitter<Moment | string>();
+  @Output() onDisplayDateChange = new EventEmitter<Dayjs | string>();
   @Output() onMaterialThemeChange = new EventEmitter<boolean>();
   @Output() onDisabledChange = new EventEmitter<boolean>();
   @Output() onRequireValidationChange = new EventEmitter<boolean>();
-  @Output() onMinValidationChange = new EventEmitter<Moment>();
-  @Output() onMaxValidationChange = new EventEmitter<Moment>();
-  @Output() onMinTimeValidationChange = new EventEmitter<Moment>();
-  @Output() onMaxTimeValidationChange = new EventEmitter<Moment>();
+  @Output() onMinValidationChange = new EventEmitter<Dayjs>();
+  @Output() onMaxValidationChange = new EventEmitter<Dayjs>();
+  @Output() onMinTimeValidationChange = new EventEmitter<Dayjs>();
+  @Output() onMaxTimeValidationChange = new EventEmitter<Dayjs>();
   @Output() onPlaceholderChange = new EventEmitter<string>();
   @Output() onConfigChange = new EventEmitter<Partial<IDatePickerConfig>>();
 
   @Output() openCalendar = new EventEmitter<void>();
   @Output() closeCalendar = new EventEmitter<void>();
-  @Output() moveCalendarTo = new EventEmitter<Moment>();
+  @Output() moveCalendarTo = new EventEmitter<Dayjs>();
 
   displayDate = new FormControl(null);
   material = new FormControl(true);
@@ -330,7 +330,7 @@ export class ConfigFormComponent implements OnInit {
   }
 
   moveCalendar(): void {
-    this.moveCalendarTo.emit(moment('14-01-1987', 'DD-MM-YYYY'));
+    this.moveCalendarTo.emit(dayjs('14-01-1987', 'DD-MM-YYYY'));
   }
 
   private initListeners(): void {

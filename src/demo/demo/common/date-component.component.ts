@@ -1,6 +1,6 @@
 import {INavEvent} from '../../../lib/common/models/navigation-event.model';
-import * as moment from 'moment';
-import {Moment} from 'moment';
+import * as dayjs from 'dayjs';
+import {Dayjs} from 'dayjs';
 import {DatePickerComponent, DatePickerDirective, ISelectionEvent} from '../../../lib';
 import {Directive, ViewChild} from '@angular/core';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
@@ -13,22 +13,22 @@ export abstract class DateComponent {
   control: FormControl;
 
   abstract config;
-  date = moment();
+  date = dayjs();
   material: boolean = true;
   required: boolean = false;
   disabled: boolean = false;
-  validationMinDate: Moment;
-  validationMaxDate: Moment;
-  validationMinTime: Moment;
-  validationMaxTime: Moment;
+  validationMinDate: Dayjs;
+  validationMaxDate: Dayjs;
+  validationMinTime: Dayjs;
+  validationMaxTime: Dayjs;
   placeholder: string = 'Choose a date...';
-  displayDate: Moment | string;
+  displayDate: Dayjs | string;
 
-  displayDateChanged(displayDate: Moment | string): void {
+  displayDateChanged(displayDate: Dayjs | string): void {
     this.displayDate = displayDate;
   }
 
-  onDisplayDateChange(displayDate: Moment | string): void {
+  onDisplayDateChange(displayDate: Dayjs | string): void {
     this.displayDate = displayDate;
   }
 
@@ -47,25 +47,25 @@ export abstract class DateComponent {
     this.control.updateValueAndValidity();
   }
 
-  onMinValidationChange($event: Moment): void {
+  onMinValidationChange($event: Dayjs): void {
     this.validationMinDate = $event;
     this.control.setValidators(this.getValidations());
     this.control.updateValueAndValidity();
   }
 
-  onMaxValidationChange($event: Moment): void {
+  onMaxValidationChange($event: Dayjs): void {
     this.validationMaxDate = $event;
     this.control.setValidators(this.getValidations());
     this.control.updateValueAndValidity();
   }
 
-  onMinTimeValidationChange($event: Moment): void {
+  onMinTimeValidationChange($event: Dayjs): void {
     this.validationMinTime = $event;
     this.control.setValidators(this.getValidations());
     this.control.updateValueAndValidity();
   }
 
-  onMaxTimeValidationChange($event: Moment): void {
+  onMaxTimeValidationChange($event: Dayjs): void {
     this.validationMaxTime = $event;
     this.control.setValidators(this.getValidations());
     this.control.updateValueAndValidity();
@@ -90,7 +90,7 @@ export abstract class DateComponent {
     (this.dateComponent || this.dateDirective).api.close();
   }
 
-  moveCalendarTo($event: Moment): void {
+  moveCalendarTo($event: Dayjs): void {
     (this.dateComponent || this.dateDirective).api.moveCalendarTo($event);
   }
 
@@ -127,25 +127,25 @@ export abstract class DateComponent {
       this.required ? Validators.required : () => undefined,
       (control) => {
         return this.validationMinDate && this.config &&
-        moment(control.value, this.config.format)
+        dayjs(control.value, this.config.format)
           .isBefore(this.validationMinDate)
           ? {minDate: 'minDate Invalid'} : undefined
       },
       (control) => {
         return this.validationMaxDate && this.config &&
-        moment(control.value, this.config.format)
+        dayjs(control.value, this.config.format)
           .isAfter(this.validationMaxDate)
           ? {maxDate: 'maxDate Invalid'} : undefined
       },
       (control) => {
         return this.validationMinTime && this.config &&
-        moment(control.value, this.config.format)
+        dayjs(control.value, this.config.format)
           .isBefore(this.validationMinTime)
           ? {minDate: 'minDate Invalid'} : undefined
       },
       (control) => {
         return this.validationMaxTime && this.config &&
-        moment(control.value, this.config.format)
+        dayjs(control.value, this.config.format)
           .isAfter(this.validationMaxTime)
           ? {maxDate: 'maxDate Invalid'} : undefined
       }

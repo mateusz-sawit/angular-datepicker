@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import * as moment from 'moment';
-import {Moment} from 'moment';
+import * as dayjs from 'dayjs';
+import {Dayjs} from 'dayjs';
 
 import {UtilsService} from '../common/services/utils/utils.service';
 import {DayCalendarService} from '../day-calendar/day-calendar.service';
@@ -14,7 +14,7 @@ const COMBINED_FORMAT = DAY_FORMAT + TIME_FORMAT;
 @Injectable()
 export class DayTimeCalendarService {
   readonly DEFAULT_CONFIG: IDayTimeCalendarConfig = {
-    locale: moment.locale()
+    locale: dayjs.locale()
   };
 
   constructor(private utilsService: UtilsService,
@@ -29,31 +29,31 @@ export class DayTimeCalendarService {
       ...this.dayCalendarService.getConfig(config)
     };
 
-    moment.locale(config.locale);
+    dayjs.locale(config.locale);
 
     return _config;
   }
 
-  updateDay(current: Moment, day: Moment, config: IDayTimeCalendarConfig): Moment {
-    const time = current ? current : moment();
-    let updated = moment(day.format(DAY_FORMAT) + time.format(TIME_FORMAT), COMBINED_FORMAT);
+  updateDay(current: Dayjs, day: Dayjs, config: IDayTimeCalendarConfig): Dayjs {
+    const time = current ? current : dayjs();
+    let updated = dayjs(day.format(DAY_FORMAT) + time.format(TIME_FORMAT), COMBINED_FORMAT);
 
     if (config.min) {
-      const min = <Moment>config.min;
+      const min = <Dayjs>config.min;
       updated = min.isAfter(updated) ? min : updated;
     }
 
     if (config.max) {
-      const max = <Moment>config.max;
+      const max = <Dayjs>config.max;
       updated = max.isBefore(updated) ? max : updated;
     }
 
     return updated;
   }
 
-  updateTime(current: Moment, time: Moment): Moment {
-    const day = current ? current : moment();
+  updateTime(current: Dayjs, time: Dayjs): Dayjs {
+    const day = current ? current : dayjs();
 
-    return moment(day.format(DAY_FORMAT) + time.format(TIME_FORMAT), COMBINED_FORMAT);
+    return dayjs(day.format(DAY_FORMAT) + time.format(TIME_FORMAT), COMBINED_FORMAT);
   }
 }

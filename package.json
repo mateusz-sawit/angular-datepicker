@@ -1,5 +1,5 @@
 {
-  "name": "ng2-date-picker",
+  "name": "sawit-ng2-date-picker",
   "author": "Vlad Ioffe",
   "version": "12.0.3",
   "license": "MIT",
@@ -95,17 +95,11 @@
   },
   "ngPackage": {
     "lib": {
-      "entryFile": "src/lib/index.ts",
-      "umdModuleIds": {
-        "moment": "moment"
-      }
+      "entryFile": "src/lib/index.ts"
     },
-    "dest": "bin",
-    "allowedNonPeerDependencies": [
-      "moment"
-    ]
+    "dest": "bin"
   },
   "dependencies": {
-    "moment": "^2.29.1"
+    "dayjs": "^1.10.7"
   }
 }

@@ -1,9 +1,9 @@
 import {SingleCalendarValue} from './single-calendar-value';
-import {unitOfTime} from 'moment';
+import {OpUnitType} from 'dayjs';
 import {SelectEvent} from './selection-event.enum';
 
 export interface ISelectionEvent {
   date: SingleCalendarValue;
-  granularity: unitOfTime.Base;
+  granularity: OpUnitType;
   type: SelectEvent;
 }
