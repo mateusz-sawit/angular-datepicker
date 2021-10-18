@@ -2,19 +2,12 @@ import {ECalendarValue} from '../../types/calendar-value-enum';
 import {SingleCalendarValue} from '../../types/single-calendar-value';
 import {Injectable} from '@angular/core';
 import * as dayjs from 'dayjs';
-import * as isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
-import * as isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
-import * as isBetween from 'dayjs/plugin/isBetween'
 import {Dayjs, OpUnitType} from 'dayjs';
 import {CalendarValue} from '../../types/calendar-value';
 import {IDate} from '../../models/date.model';
 import {CalendarMode} from '../../types/calendar-mode';
 import {DateValidator} from '../../types/validator.type';
 import {ICalendarInternal} from '../../models/calendar.model';
-
-dayjs.extend(isSameOrAfter);
-dayjs.extend(isSameOrBefore);
-dayjs.extend(isBetween);
 
 export interface DateLimits {
   minDate?: SingleCalendarValue;
@@ -43,6 +36,7 @@ export class UtilsService {
   }
 
   convertToDayjs(date: SingleCalendarValue, format: string): Dayjs {
+    console.log(date);
     if (!date) {
       return null;
     } else if (typeof date === 'string') {
@@ -224,7 +218,7 @@ export class UtilsService {
       validators.push({
         key: 'minDate',
         isValid: () => {
-          const _isValid = value.every(val => val.isSameOrAfter(md, granularity));
+          const _isValid = value.every(val => val.isSame(md, granularity) || val.isAfter(md, granularity));
           isValid = isValid ? _isValid : false;
           return _isValid;
         }
@@ -236,7 +230,7 @@ export class UtilsService {
       validators.push({
         key: 'maxDate',
         isValid: () => {
-          const _isValid = value.every(val => val.isSameOrBefore(md, granularity));
+          const _isValid = value.every(val => val.isSame(md, granularity) || val.isBefore(md, granularity));
           isValid = isValid ? _isValid : false;
           return _isValid;
         }
@@ -248,7 +242,7 @@ export class UtilsService {
       validators.push({
         key: 'minTime',
         isValid: () => {
-          const _isValid = value.every(val => this.onlyTime(val).isSameOrAfter(md));
+          const _isValid = value.every(val => this.onlyTime(val).isAfter(md) || this.onlyTime(val).isSame(md));
           isValid = isValid ? _isValid : false;
           return _isValid;
         }
@@ -260,7 +254,7 @@ export class UtilsService {
       validators.push({
         key: 'maxTime',
         isValid: () => {
-          const _isValid = value.every(val => this.onlyTime(val).isSameOrBefore(md));
+          const _isValid = value.every(val => this.onlyTime(val).isBefore(md) || this.onlyTime(val).isSame(md));
           isValid = isValid ? _isValid : false;
           return _isValid;
         }
@@ -317,7 +311,7 @@ export class UtilsService {
   }
 
   isDateInRange(date: Dayjs, from: Dayjs, to: Dayjs): boolean {
-    return date.isBetween(from, to, 'day', '[]');
+    return (date.isAfter(from, 'day') || date.isSame(from, 'day')) && (date.isBefore(to, 'day') || date.isSame(to, 'day'));
   }
 
   convertPropsToDayjs(obj: {[key: string]: any}, format: string, props: string[]) {

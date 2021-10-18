@@ -53,13 +53,12 @@ export class DayCalendarService {
   generateMonthArray(config: IDayCalendarConfigInternal, month: Dayjs, selected: Dayjs[]): IDay[][] {
     let monthArray: IDay[][] = [];
     const firstDayOfWeekIndex = this.DAYS.indexOf(config.firstDayOfWeek);
-    const firstDayOfBoard = month.clone().startOf('month');
-
+    let firstDayOfBoard = month.clone().startOf('month');
     while (firstDayOfBoard.day() !== firstDayOfWeekIndex) {
-      firstDayOfBoard.subtract(1, 'day');
+      firstDayOfBoard = firstDayOfBoard.subtract(1, 'day');
     }
 
-    const current = firstDayOfBoard.clone();
+    let current = firstDayOfBoard.clone();
     const prevMonth = month.clone().subtract(1, 'month');
     const nextMonth = month.clone().add(1, 'month');
     const today = dayjs();
@@ -75,7 +74,7 @@ export class DayCalendarService {
           currentDay: current.isSame(today, 'day'),
           disabled: this.isDateDisabled(current, config)
         });
-        current.add(1, 'day');
+        current = current.add(1, 'day');
 
         return array;
       }, []);

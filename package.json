@@ -1,12 +1,12 @@
 {
   "name": "sawit-ng2-date-picker",
   "author": "Vlad Ioffe",
-  "version": "12.0.3",
+  "version": "12.0.4",
   "license": "MIT",
   "main": "index.js",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --o",
+    "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "test:ci": "ng test --watch=false --browsers=ChromeHeadlessCustom",
@@ -95,9 +95,15 @@
   },
   "ngPackage": {
     "lib": {
-      "entryFile": "src/lib/index.ts"
+      "entryFile": "src/lib/index.ts",
+      "umdModuleIds": {
+        "dayjs": "dayjs"
+      }
     },
-    "dest": "bin"
+    "dest": "bin",
+    "allowedNonPeerDependencies": [
+      "dayjs"
+    ]
   },
   "dependencies": {
     "dayjs": "^1.10.7"
