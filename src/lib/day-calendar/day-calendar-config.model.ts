@@ -6,6 +6,7 @@ import {ECalendarValue} from '../common/types/calendar-value-enum';
 export interface IConfig {
   isDayDisabledCallback?: (date: Dayjs) => boolean;
   isMonthDisabledCallback?: (date: Dayjs) => boolean;
+  isYearDisabledCallback?: (date: Dayjs) => boolean;
   weekDayFormat?: string;
   weekDayFormatter?: (dayIndex: number) => string;
   showNearMonthDays?: boolean;
@@ -30,6 +31,11 @@ export interface IConfig {
   showGoToCurrent?: boolean;
   unSelectOnClick?: boolean;
   numOfMonthRows?: number;
+  yearBtnFormat?: string;
+  yearBtnFormatter?: (day: Dayjs) => string;
+  numOfYearRows?: number;
+  numOfYearCols?: number;
+  yearBtnCssClassCallback?: (day: Dayjs) => string;
 }
 
 export interface IDayCalendarConfig extends IConfig,

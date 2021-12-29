@@ -1,6 +1,6 @@
 import {DemoPage} from './app.po';
 import {browser} from 'protractor';
-import * as moment from 'moment';
+import * as dayjs from 'dayjs';
 import {Key} from 'selenium-webdriver';
 
 describe('dpDayPicker directive', () => {
@@ -27,7 +27,7 @@ describe('dpDayPicker directive', () => {
 
     await page.dayDirectiveInput.click();
     expect(await page.dayCalendarNavHeaderBtn.getText())
-      .toEqual(moment().subtract(1, 'month').format('MMM, YYYY'));
+      .toEqual(dayjs().subtract(1, 'month').format('MMM, YYYY'));
   });
 
   it('should check that the theme is added and removed', async () => {

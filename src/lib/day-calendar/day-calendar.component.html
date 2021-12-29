@@ -41,7 +41,7 @@
 <dp-month-calendar
     (onLeftNav)="onMonthCalendarLeftClick($event)"
     (onLeftSecondaryNav)="onMonthCalendarSecondaryLeftClick($event)"
-    (onNavHeaderBtnClick)="toggleCalendarMode(CalendarMode.Day)"
+    (onNavHeaderBtnClick)="toggleCalendarMode(CalendarMode.Year)"
     (onRightNav)="onMonthCalendarRightClick($event)"
     (onRightSecondaryNav)="onMonthCalendarSecondaryRightClick($event)"
     (onSelect)="monthSelected($event)"
@@ -51,3 +51,15 @@
     [ngModel]="_selected"
     [theme]="theme">
 </dp-month-calendar>
+
+<dp-year-calendar
+    (onLeftNav)="onYearCalendarLeftClick($event)"
+    (onNavHeaderBtnClick)="toggleCalendarMode(CalendarMode.Month)"
+    (onRightNav)="onYearCalendarRightClick($event)"
+    (onSelect)="yearSelected($event)"
+    *ngIf="currentCalendarMode ===  CalendarMode.Year"
+    [config]="yearCalendarConfig"
+    [displayDate]="_currentDateView"
+    [ngModel]="_selected"
+    [theme]="theme">
+</dp-year-calendar>

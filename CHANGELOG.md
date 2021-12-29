@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+<a name="12.0.6"></a>
+# [12.0.6] (2021-12-28)
+- Years calendar for quick year selection
+
 <a name="12.0.4"></a>
 # [12.0.4] (2021-10-18)
 - moment js replaced with DayJs

@@ -36,7 +36,6 @@ export class UtilsService {
   }
 
   convertToDayjs(date: SingleCalendarValue, format: string): Dayjs {
-    console.log(date);
     if (!date) {
       return null;
     } else if (typeof date === 'string') {

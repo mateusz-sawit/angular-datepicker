@@ -6,6 +6,7 @@ import {UtilsService} from '../common/services/utils/utils.service';
 import {IDay} from './day.model';
 import {IDayCalendarConfig, IDayCalendarConfigInternal} from './day-calendar-config.model';
 import {IMonthCalendarConfig} from '../month-calendar/month-calendar-config';
+import {IYearCalendarConfig} from "../year-calendar/year-calendar-config";
 
 @Injectable()
 export class DayCalendarService {
@@ -177,6 +178,26 @@ export class DayCalendarService {
       showMultipleYearsNavigation: componentConfig.showMultipleYearsNavigation,
       showGoToCurrent: componentConfig.showGoToCurrent,
       numOfMonthRows: componentConfig.numOfMonthRows
+    });
+  }
+
+  getYearCalendarConfig(componentConfig: IDayCalendarConfigInternal): IYearCalendarConfig {
+    return this.utilsService.clearUndefined({
+      min: componentConfig.min,
+      max: componentConfig.max,
+      format: componentConfig.format,
+      isNavHeaderBtnClickable: true,
+      allowMultiSelect: false,
+      locale: componentConfig.locale,
+      yearFormat: componentConfig.yearFormat,
+      yearFormatter: componentConfig.yearFormatter,
+      yearBtnFormat: componentConfig.yearBtnFormat,
+      yearBtnFormatter: componentConfig.yearBtnFormatter,
+      yearBtnCssClassCallback: componentConfig.yearBtnCssClassCallback,
+      isYearDisabledCallback: componentConfig.isYearDisabledCallback,
+      showGoToCurrent: componentConfig.showGoToCurrent,
+      numOfYearRows: componentConfig.numOfYearRows,
+      numOfYearCols: componentConfig.numOfYearCols
     });
   }
 

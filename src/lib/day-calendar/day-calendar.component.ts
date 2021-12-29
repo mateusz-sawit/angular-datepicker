@@ -35,6 +35,8 @@ import {IMonthCalendarConfig} from '../month-calendar/month-calendar-config';
 import {IMonth} from '../month-calendar/month.model';
 import {DateValidator} from '../common/types/validator.type';
 import {INavEvent} from '../common/models/navigation-event.model';
+import {IYear} from "../year-calendar/year.model";
+import {IYearCalendarConfig} from "../year-calendar/year-calendar-config";
 
 @Component({
   selector: 'dp-day-calendar',
@@ -65,6 +67,7 @@ export class DayCalendarComponent implements OnInit, OnChanges, ControlValueAcce
   @HostBinding('class') @Input() theme: string;
   @Output() onSelect: EventEmitter<IDay> = new EventEmitter();
   @Output() onMonthSelect: EventEmitter<IMonth> = new EventEmitter();
+  @Output() onYearSelect: EventEmitter<IYear> = new EventEmitter();
   @Output() onNavHeaderBtnClick: EventEmitter<ECalendarMode> = new EventEmitter();
   @Output() onGoToCurrent: EventEmitter<void> = new EventEmitter();
   @Output() onLeftNav: EventEmitter<INavEvent> = new EventEmitter();
@@ -79,6 +82,7 @@ export class DayCalendarComponent implements OnInit, OnChanges, ControlValueAcce
   validateFn: DateValidator;
   currentCalendarMode: ECalendarMode = ECalendarMode.Day;
   monthCalendarConfig: IMonthCalendarConfig;
+  yearCalendarConfig: IYearCalendarConfig;
   _shouldShowCurrent: boolean = true;
   navLabel: string;
   showLeftNav: boolean;
@@ -143,6 +147,7 @@ export class DayCalendarComponent implements OnInit, OnChanges, ControlValueAcce
       .generateWeekdays(this.componentConfig.firstDayOfWeek);
     this.inputValueType = this.utilsService.getInputType(this.inputValue, this.componentConfig.allowMultiSelect);
     this.monthCalendarConfig = this.dayCalendarService.getMonthCalendarConfig(this.componentConfig);
+    this.yearCalendarConfig = this.dayCalendarService.getYearCalendarConfig(this.componentConfig);
     this._shouldShowCurrent = this.shouldShowCurrent();
   }
 
@@ -275,6 +280,14 @@ export class DayCalendarComponent implements OnInit, OnChanges, ControlValueAcce
     this.onLeftNav.emit(change);
   }
 
+  onYearCalendarLeftClick(change: INavEvent) {
+    this.onLeftNav.emit(change);
+  }
+
+  onYearCalendarRightClick(change: INavEvent) {
+    this.onRightNav.emit(change);
+  }
+
   getWeekdayName(weekday: Dayjs): string {
     if (this.componentConfig.weekDayFormatter) {
       return this.componentConfig.weekDayFormatter(weekday.day());
@@ -296,6 +309,12 @@ export class DayCalendarComponent implements OnInit, OnChanges, ControlValueAcce
     this.currentDateView = month.date.clone();
     this.currentCalendarMode = ECalendarMode.Day;
     this.onMonthSelect.emit(month);
+  }
+
+  yearSelected(year: IYear) {
+    this.currentDateView = year.date.clone();
+    this.currentCalendarMode = ECalendarMode.Month;
+    this.onYearSelect.emit(year);
   }
 
   moveCalendarsBy(current: Dayjs, amount: number, granularity: OpUnitType = 'month') {

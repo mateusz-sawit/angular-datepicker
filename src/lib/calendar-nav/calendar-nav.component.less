@@ -21,11 +21,10 @@
     }
 
     .dp-nav-btns-container {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      right: 5px;
-      display: inline-block;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .dp-calendar-nav-container-left, .dp-calendar-nav-container-right {
@@ -65,10 +64,6 @@
     }
 
     .dp-nav-header {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      left: 5px;
       display: inline-block;
       font-size: 13px;
     }
@@ -78,8 +73,6 @@
     }
 
     .dp-current-location-btn {
-      position: relative;
-      top: -1px;
       height: 16px;
       width: 16px;
       vertical-align: middle;
