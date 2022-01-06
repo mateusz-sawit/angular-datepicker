@@ -216,6 +216,7 @@ export class UtilsService {
       const md = this.convertToDayjs(minDate, format);
       validators.push({
         key: 'minDate',
+        required: md,
         isValid: () => {
           const _isValid = value.every(val => val.isSame(md, granularity) || val.isAfter(md, granularity));
           isValid = isValid ? _isValid : false;
@@ -228,6 +229,7 @@ export class UtilsService {
       const md = this.convertToDayjs(maxDate, format);
       validators.push({
         key: 'maxDate',
+        required: md,
         isValid: () => {
           const _isValid = value.every(val => val.isSame(md, granularity) || val.isBefore(md, granularity));
           isValid = isValid ? _isValid : false;
@@ -240,6 +242,7 @@ export class UtilsService {
       const md = this.onlyTime(this.convertToDayjs(minTime, format));
       validators.push({
         key: 'minTime',
+        required: md,
         isValid: () => {
           const _isValid = value.every(val => this.onlyTime(val).isAfter(md) || this.onlyTime(val).isSame(md));
           isValid = isValid ? _isValid : false;
@@ -252,6 +255,7 @@ export class UtilsService {
       const md = this.onlyTime(this.convertToDayjs(maxTime, format));
       validators.push({
         key: 'maxTime',
+        required: md,
         isValid: () => {
           const _isValid = value.every(val => this.onlyTime(val).isBefore(md) || this.onlyTime(val).isSame(md));
           isValid = isValid ? _isValid : false;
@@ -271,7 +275,8 @@ export class UtilsService {
       if (!value.every(val => val.isValid())) {
         return {
           format: {
-            given: inputVal
+            given: inputVal,
+            format
           }
         };
       }
@@ -279,7 +284,8 @@ export class UtilsService {
       const errors = validators.reduce((map, err) => {
         if (!err.isValid()) {
           map[err.key] = {
-            given: value
+            given: value,
+            required: err.required
           };
         }
 
